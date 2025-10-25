@@ -1,1 +1,1 @@
-delete[] arr;
+ cout << ref_a;
