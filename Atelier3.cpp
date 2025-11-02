@@ -163,20 +163,21 @@ class Client{
         string nom, prenom;
     public :
     Client() :id(0),nom(""),prenom (""){}
-    Client(int id,string nom,string prenom) :id(0),nom("imane"),prenom("ranbok"){}
-    Client( const Client &c){
+    Client(int id,string nom,string prenom) :id(id),nom(nom),prenom(prenom){}
+    Client(const Client &c){
         this->id = c.id;
         this->nom = c.nom;
         this->prenom = c.prenom;
     }
     void afficher(){
-        cout << "les information :";
-        cout <<id <<" "<< nom  <<" "<< prenom;
+        cout << "les information : \n";
+        cout <<"id :"<<id <<" nom: "<< nom  <<" prenom: "<< prenom;
     }
+    int getId() const { return id; }
+    string getNom() const { return nom; }
+    string getPrenom() const { return prenom; }
     ~Client(){
-        delete id;
-        delete nom;
-        delete prenom;
+        cout << "Destruction du client : " << nom << " " << prenom << endl;
     }
 };
 class Compte{
@@ -184,8 +185,61 @@ class Compte{
         int numero;
         float solde;
         Client *client;
+         static int compteur;
     public :
-        long num_comptes;
-        Compte() : numero(0), solde(0), client(nullptr){}
-        Compte(int numero ,float solde,&client)
+        Compte() : numero(0), solde(0), client(nullptr) { compteur++; }
+        Compte(int numero ,float solde, Client &c) :numero(numero),solde(solde){
+            client = new Client(c); // copie profonde du client
+            compteur++;
+        }
+        Compte(const Compte &C) : numero(C.numero),solde(C.solde){
+            client = new Client(*C.client); // copie profonde
+            compteur++;
+        }
+        void afficher(){
+            cout << "les information de compte : \n";
+            cout << numero << " " << solde << "DHS";
+             if (client)
+            client->afficher();
+        else
+            cout << "Aucun client associé.\n";
+
+        }
+        static int nombrecompte(){
+            return compteur;
+        };
+        inline int calculInteret();
+         ~Compte()
+        {
+         delete client;
+        compteur--;
+        cout << "Compte #" << numero << " supprimé." << endl;
+    }
+};
+
+int Compte ::compteur = 0;
+
+inline float calculInteret(float solde, float taux){
+    float nouveauSolde = solde + (solde * taux);
+    cout << "le nouveau solde est :" << nouveauSolde;
+}
+
+int main (){
+    Client c1(1,"Imane","Ranbok");
+    Client c2(2,"Rahma","ranbok");
+    Client c3(c2);
+    c3.afficher();
+    Compte compte1(1500,50000, c1);
+    Compte compte2(2000, 10000, c2);
+    Compte compte3(compte2);
+    compte1.afficher();
+    compte2.afficher();
+    compte3.afficher();
+
+    cout << "Nombre de comptes : " << Compte::nombrecompte();
+
+    float nouveauSolde = calculInteret(1500, 0.05);
+    cout << "Nouveau solde aprss interet : " << nouveauSolde;
+
+    return 0;
 }
