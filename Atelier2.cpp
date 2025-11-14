@@ -226,7 +226,6 @@ using namespace std;
 //  int main(){
 //      vecteur3d vecteur1(1,2,3);
 //      vecteur3d vecteur2(4,5,6);
-     
 //     vecteur3d resultat1 =vecteur1.somme(vecteur2);
 //     resultat1.afficher();
 //     cout << vecteur1.produitScalaire(vecteur2) << "\n";
