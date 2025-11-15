@@ -32,11 +32,13 @@ class C : public B, public A{ //CLASS Herite de class A et B
 main()
 { 
     C c1 ; //constructer par default 
-    C c2 (10, 11, 12, 5.0) ; //la class c herite de class A et B alors lorsque on cree un object de class C les constructeur de class B et  A ecrit des object automatiquement :
-    // ** construction objet B : 1 0   constructeur de l'object B on a n = 1 et B(v) y =v et v =0.0
-    // ** construction objet A : 1 1   constructeur de l'object A on a A(n1) n=n1 = 1 et x = 1
+    //la class c herite de class A et B alors lorsque on cree un object de class C les constructeur de class B et  A ecrit des object respectivement  automatiquement : B en suite A en suite C  ordre de l'heritage multiple 
+    // ** construction objet B : 1 0   constructeur de l'object B on a  B(v) :n = 1 et v = 0
+    // ** construction objet A : 1 1   constructeur de l'object A on a A(n1) n = n1 = 1(valeur par defaut de n1) et x = 1
     // ** construction objet C : 3 3   constructeur de l'object C on a n = n3 = 3 et p =n1 +n2 =3
-    // ** construction objet B : 1 5    constructeur de l'object B on a n =1 et v =
-    // ** construction objet A : 10 1 
-    // ** construction objet C : 12 21
+    
+    C c2 (10, 11, 12, 5.0) ; 
+    // ** construction objet B : 1 5  n = 1 et v = 5
+    // ** construction objet A : 10 1 n1 =10 et x = 1
+    // ** construction objet C : 12 21 n3 = 12 et p = n1+n2 =10+11
 }
